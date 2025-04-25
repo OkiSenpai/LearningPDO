@@ -2,9 +2,13 @@
 
 
 require_once '../config.php';
+require_once '../model/formModel.php';
 
-try{
-    $connectPDO = new PDO(DB_DSN, DB_CONNECT_USER, DB_CONNECT_PWD,
+try {
+    $connectPDO = new PDO(
+        DB_DSN,
+        DB_CONNECT_USER,
+        DB_CONNECT_PWD,
         [
             // par défaut les résultats des requêtes sont en tableau associatif
             PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
@@ -12,17 +16,18 @@ try{
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         ]
     );
-}catch(Exception $e){
+} catch (Exception $e) {
     die("Code : {$e->getCode()} <br> Message : {$e->getMessage()}");
 }
 
-if(isset($_POST['ime'],$_POST['prezime'],$_POST['email'],$_POST['message'])){
-    $insert = addArticle($connectPDO,$_POST['ime'],$_POST['prezime'],$_POST['email'],$_POST['message']);
+if (isset($_POST['ime'], $_POST['prezime'], $_POST['email'], $_POST['message'])) {
+    $insert = addArticle($connectPDO, $_POST['ime'], $_POST['prezime'], $_POST['email'], $_POST['message']);
 
-    if($insert===true){
+    if ($insert == true) {
         echo "bravo";
-    }else{
-        echo "not good";
+        header('location: ./');
+    } else {
+        echo "bla bla";
     }
 }
 

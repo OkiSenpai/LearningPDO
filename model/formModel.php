@@ -1,8 +1,6 @@
-
-
 <?php
 
-function addArticle(PDO $db , $ime , $prezime , $email , $poruka):bool|string
+function addArticle(PDO $db, $ime, $prezime, $email, $poruka): bool
 {
 
     $name = $ime;
@@ -10,16 +8,22 @@ function addArticle(PDO $db , $ime , $prezime , $email , $poruka):bool|string
     $mail = $email;
     $message = $poruka;
 
-    $sql = "INSERT INTO 'user'
-    ('ime','prezime', 'email','message')
-        VALUES(?,?,?,?)";
+    if (empty($ime)) {
+        return false;
+    }
+
+    $sql = "INSERT INTO `messages`  
+    (`Nom`,`Prenom`,`Email`,`message`)
+        VALUES 
+        (?,?,?,?)";
 
     $request = $db->prepare($sql);
-    try{
-        $request->execute([$name,$lastName,$mail,$message]);
+    try {
+        $request->execute([$name, $lastName, $mail, $message]);
         return true;
-    }catch(Exception $e){
+    } catch (Exception $e) {
         return $e->getMessage();
     }
 
 }
+
